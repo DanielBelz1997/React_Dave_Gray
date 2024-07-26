@@ -1,14 +1,20 @@
-module.exports = {
+/** @type {import('tailwindcss').Config} */
+export default {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-
-    // Or if using `src` directory:
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      height: {
+        "calc-100vh-2px": "calc(100vh - 2px)",
+      },
+      width: {
+        "calc-100%-2px": "calc(100% - 2px)",
+      },
+    },
   },
   plugins: [],
 };
