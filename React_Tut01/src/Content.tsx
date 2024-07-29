@@ -1,33 +1,26 @@
-import { useState } from "react";
+import ItemList from "./ItemList";
+import { Item } from "./types/item";
 
-export default function Content() {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      checked: false,
-      item: "one Half punt bag of Coca Covered Almonds",
-    },
-    {
-      id: 2,
-      checked: true,
-      item: "Item 2",
-    },
-    {
-      id: 3,
-      checked: false,
-      item: "Item 3",
-    },
-  ]);
-
+export default function Content({
+  items,
+  handleCheck,
+  handleDelete,
+}: {
+  items: Item[];
+  handleCheck: (id: number) => void;
+  handleDelete: (id: number) => void;
+}) {
   return (
-    <main className="w-full flex flex-col flex-grow justify-center items-center overflow-y-auto">
-      {items.map((item, index) => {
-        <li key={index} className="">
-          <input type="checkbox" checked={item.checked} />
-          <label>{item.item}</label>
-          <button>Delete</button>
-        </li>;
-      })}
+    <main className="w-full flex flex-col flex-grow justify-start overflow-y-auto text-center">
+      {items.length ? (
+        <ItemList
+          items={items}
+          handleCheck={handleCheck}
+          handleDelete={handleDelete}
+        />
+      ) : (
+        <p className="mt-8">Your list is empty</p>
+      )}
     </main>
   );
 }

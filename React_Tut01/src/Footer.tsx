@@ -1,9 +1,9 @@
-export default function Footer() {
-  const today = new Date();
-
+export default function Footer({ length }: { length: number }) {
   return (
     <footer className="w-full p-1 bg-sky-500 text-fuchsia-800 grid place-content-center text-2xl">
-      <p>Copyrights &copy; {today.getFullYear()}</p>
+      <p>
+        {length} List {length === 1 ? "item" : "items"}
+      </p>
     </footer>
   );
 }

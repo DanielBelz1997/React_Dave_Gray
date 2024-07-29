@@ -13,6 +13,7 @@ export default {
       },
       width: {
         "calc-100%-2px": "calc(100% - 2px)",
+        "max-w-calc-100%-50px": "calc(100% - 50px)",
       },
     },
   },
