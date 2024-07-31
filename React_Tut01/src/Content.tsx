@@ -6,13 +6,13 @@ export default function Content({
   handleCheck,
   handleDelete,
 }: {
-  items: Item[];
+  items: Item[] | null;
   handleCheck: (id: number) => void;
   handleDelete: (id: number) => void;
 }) {
   return (
     <main className="w-full flex flex-col flex-grow justify-start overflow-y-auto text-center">
-      {items.length ? (
+      {items?.length ? (
         <ItemList
           items={items}
           handleCheck={handleCheck}
