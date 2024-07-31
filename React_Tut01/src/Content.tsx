@@ -6,7 +6,7 @@ export default function Content({
   handleCheck,
   handleDelete,
 }: {
-  items: Item[] | null;
+  items: Item[] | undefined;
   handleCheck: (id: number) => void;
   handleDelete: (id: number) => void;
 }) {

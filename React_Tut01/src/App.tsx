@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 
 import Header from "./Header";
+import SearchItem from "./SearchItem";
 import Content from "./Content";
 import Footer from "./Footer";
 
@@ -14,6 +15,7 @@ function App() {
     JSON.parse(localStorage.getItem("shopping list") || "{}")
   );
   const [newItem, setNewItem] = useState("");
+  const [search, setSearch] = useState("");
 
   const handleShoppingList = (list: Item[]) => {
     setItems(list);
@@ -21,10 +23,16 @@ function App() {
   };
 
   const addItem = (item: Item["item"]) => {
-    const id = items?.length ? items[items.length - 1].id + 1 : 1;
-    const myNewItem = { id, checked: false, item };
-    const listItems = [...(items as Item[]), myNewItem];
-    handleShoppingList(listItems);
+    if (Array.isArray(items)) {
+      const id = items?.length ? items[items.length - 1].id + 1 : 1;
+      const myNewItem = { id, checked: false, item };
+      const listItems = items ? [...items, myNewItem] : [myNewItem];
+      handleShoppingList(listItems);
+    } else {
+      const id = 1;
+      const myNewItem = { id, checked: false, item };
+      handleShoppingList([myNewItem]);
+    }
   };
 
   const handleCheck = (id: Item["id"]) => {
@@ -55,8 +63,11 @@ function App() {
         setNewItem={setNewItem}
         handleSubmit={handleSubmit}
       />
+      <SearchItem search={search} setSearch={setSearch} />
       <Content
-        items={items}
+        items={items?.filter((item) =>
+          item.item.toLowerCase().includes(search.toLowerCase())
+        )}
         handleCheck={handleCheck}
         handleDelete={handleDelete}
       />
