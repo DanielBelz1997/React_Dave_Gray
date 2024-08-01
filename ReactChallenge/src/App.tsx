@@ -1,27 +1,28 @@
 import { useState } from "react";
-
+import Text from "./Text";
 import styled from "styled-components";
 import BoxProps from "../types/warp";
+import Input from "./Input";
 
 function App() {
   const [text, setText] = useState("");
+  const [hexValue, setHexValue] = useState("");
+  const [isDarkText, setIsDarkText] = useState(true);
 
   return (
     <Container>
       <Box text={text}>
-        <p
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            marginInline: "auto",
-            fontSize: "35px",
-          }}
-        >
-          {text}
-        </p>
+        <Text text={text} hexValue={hexValue} isDarkText={isDarkText} />
       </Box>
-      <Input onChange={(e) => setText(e.target.value)} />
+      <StyledInput>
+        <Input
+          text={text}
+          setText={setText}
+          setHexValue={setHexValue}
+          isDarkText={isDarkText}
+          setIsDarkText={setIsDarkText}
+        />
+      </StyledInput>
     </Container>
   );
 }
@@ -43,8 +44,8 @@ const Box = styled.div<BoxProps>`
   background-color: ${(props) => (props.text ? props.text : "white")};
 `;
 
-const Input = styled.input`
-  font-size: 25px;
+const StyledInput = styled.div`
+  width: 300px;
   border: solid;
 `;
 
