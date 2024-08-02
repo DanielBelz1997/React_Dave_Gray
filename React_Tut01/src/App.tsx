@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 
 import Header from "./Header";
 import SearchItem from "./SearchItem";
@@ -11,27 +11,36 @@ import AddItem from "./AddItem";
 import "./index.css";
 
 function App() {
-  const [items, setItems] = useState<Item[] | null>(
-    JSON.parse(localStorage.getItem("shopping list") || "{}")
+  const [items, setItems] = useState<Item[] | []>(
+    JSON.parse(localStorage.getItem("shopping list") || "[]")
   );
   const [newItem, setNewItem] = useState("");
   const [search, setSearch] = useState("");
 
-  const handleShoppingList = (list: Item[]) => {
-    setItems(list);
-    localStorage.setItem("shopping list", JSON.stringify(list));
-  };
+  // every render
+  console.log("before useEffect");
+
+  // runs at every render! give it dependency!
+  // its asynchronous`
+  useEffect(() => {
+    localStorage.setItem("shopping list", JSON.stringify(items));
+    // [] => only at load time
+    // [items] => only when item state changes
+  }, [items]);
+
+  // every render
+  console.log("after useEffect");
 
   const addItem = (item: Item["item"]) => {
     if (Array.isArray(items)) {
       const id = items?.length ? items[items.length - 1].id + 1 : 1;
       const myNewItem = { id, checked: false, item };
       const listItems = items ? [...items, myNewItem] : [myNewItem];
-      handleShoppingList(listItems);
+      setItems(listItems);
     } else {
       const id = 1;
       const myNewItem = { id, checked: false, item };
-      handleShoppingList([myNewItem]);
+      setItems([myNewItem]);
     }
   };
 
@@ -39,12 +48,12 @@ function App() {
     const listItems = items?.map((item) =>
       item.id === id ? { ...item, checked: !item.checked } : item
     );
-    if (listItems) handleShoppingList(listItems);
+    if (listItems) setItems(listItems);
   };
 
   const handleDelete = (id: Item["id"]) => {
     const listItems = items?.filter((item) => item.id !== id);
-    if (listItems) handleShoppingList(listItems);
+    if (listItems) setItems(listItems);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
