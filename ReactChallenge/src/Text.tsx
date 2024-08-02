@@ -17,6 +17,7 @@ const Text = ({
         marginTop: "7vh",
         fontSize: "35px",
         alignItems: "center",
+        color: isDarkText ? "#000" : "#FFF",
       }}
     >
       <p>{text ? text : "No Value"}</p>

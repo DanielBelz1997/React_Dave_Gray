@@ -15,14 +15,12 @@ function App() {
         <Text text={text} hexValue={hexValue} isDarkText={isDarkText} />
       </Box>
       <StyledInput>
-        <Input
-          text={text}
-          setText={setText}
-          setHexValue={setHexValue}
-          isDarkText={isDarkText}
-          setIsDarkText={setIsDarkText}
-        />
+        <Input text={text} setText={setText} setHexValue={setHexValue} />
       </StyledInput>
+      <br />
+      <button type="button" onClick={() => setIsDarkText(!isDarkText)}>
+        toggle text color
+      </button>
     </Container>
   );
 }
@@ -39,7 +37,7 @@ const Box = styled.div<BoxProps>`
   width: 300px;
   height: 300px;
   display: flex;
-  margin-bottom: 5vh;
+
   border: solid;
   background-color: ${(props) => (props.text ? props.text : "white")};
 `;
